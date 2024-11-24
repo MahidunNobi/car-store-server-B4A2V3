@@ -1,13 +1,34 @@
-import express, { Application, Request, Response } from "express";
-import cors from "cors";
+import express, { Application, NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 const app: Application = express();
 
 // Parsers
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World!');
+});
+
+// Handling not found page
+app.get('*', (req: Request, res: Response) => {
+  res
+    .status(404)
+    .json({ message: 'Route not found', success: false, data: null });
+
+  return;
+});
+
+// Handling Errors
+app.all('*', (err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err) {
+    res.status(500).json({
+      message: 'Something went  wrong',
+      success: false,
+      error: err,
+    });
+  }
+  next();
 });
 
 export default app;
