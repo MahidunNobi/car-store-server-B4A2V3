@@ -21,10 +21,15 @@ const updateCarFromDB = async (id: string, obj: Partial<TCar>) => {
   });
   return result;
 };
+const deleteCarFromDB = async (id: string) => {
+  const result = await CarModel.findByIdAndDelete(new Types.ObjectId(id));
+  return result;
+};
 
 export const CarServices = {
   createCarIntoDB,
   getAllCarsFromDB,
   getSingleCarFromDB,
   updateCarFromDB,
+  deleteCarFromDB,
 };
