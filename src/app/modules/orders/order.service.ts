@@ -35,9 +35,18 @@ const createOrderIntoDB = async (order: TOrder) => {
   return result;
 };
 
+const calculateTotalRavenueFromDB = async () => {
+  const result = await OrderModel.aggregate([
+    { $group: { _id: 'totalRevinue', totalRevenue: { $sum: '$totalPrice' } } },
+    { $project: { totalRevenue: 1 } },
+  ]);
+  return result;
+};
+
 export default {
   checkCarStock,
   createOrderIntoDB,
   checkCarQuantity,
   reduceCarQuantity,
+  calculateTotalRavenueFromDB,
 };
