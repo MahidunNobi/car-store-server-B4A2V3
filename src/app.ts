@@ -1,5 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
+import { CarRouter } from './app/modules/cars/car.router';
 const app: Application = express();
 
 // Parsers
@@ -9,6 +10,9 @@ app.use(cors());
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
+
+// Application routes
+app.use('/api/cars', CarRouter);
 
 // Handling not found page
 app.get('*', (req: Request, res: Response) => {
