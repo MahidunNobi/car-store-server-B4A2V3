@@ -3,7 +3,11 @@ import { TOrder } from './order.interface';
 
 const OrderSchema = new Schema<TOrder>(
   {
-    email: { type: String, required: [true, 'Email is required'] },
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+    },
     car: {
       type: Schema.Types.ObjectId,
       ref: 'car',
